@@ -1,0 +1,1 @@
+# ressources-atelier-ia-medical
