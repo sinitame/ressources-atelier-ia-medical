@@ -28,3 +28,10 @@ class XRayDataset(Dataset):
             image,
             torch.tensor(labels),
         )
+
+def process_imagenet_predictions(preds):
+    with open("./ressources-atelier-ia-medical/data/imagenet_classes.txt", "r") as f:
+        img_classes = [s.strip() for s in f.readlines()]
+    top5_prob, top5_catid = torch.topk(preds[0], 5)
+    for id,prob in zip(top5_catid,top5_prob):
+      print(f'Label prédit: {img_classes[id]}: {prob * 100:.4f} %')
