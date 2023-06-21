@@ -3,6 +3,9 @@ import random
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from skimage.io import imread
+import torchxrayvision as xrv
+
 from sklearn.metrics import (
     average_precision_score,
     precision_recall_curve,
@@ -12,6 +15,12 @@ from sklearn.metrics import (
 
 random.seed(a=None, version=2)
 
+
+def load_xray_img(path):
+    img = imread(path)
+    img = xrv.datasets.normalize(img, 255)
+    img = np.expand_dims(img, axis=0)
+    return img
 
 def get_curve(gt, pred, target_names, curve="roc"):
     for i in range(len(target_names)):
